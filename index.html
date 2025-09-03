@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💫 ڈریم چینجر – آپ کی قسمت بدلنے کا راز</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold': '#FFD700',
+                        'dark-gold': '#B8860B',
+                        'urgent-red': '#DC2626',
+                        'dark-red': '#991B1B'
+                    },
+                    animation: {
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide': 'slide 20s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite'
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px #FFD700' },
+                            '100%': { boxShadow: '0 0 30px #FFD700, 0 0 40px #FFD700' }
+                        },
+                        slide: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+        
+        .urdu-font {
+            font-family: 'Noto Nastaliq Urdu', serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+        }
+        
+        .red-gradient {
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .sticky-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        
+        @media (max-width: 768px) {
+            .sticky-cta {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white urdu-font">
+    <!-- Header -->
+    <header class="bg-black py-4 px-4 text-center border-b-2 border-gold">
+        <h1 class="text-3xl md:text-4xl font-bold text-gold glow-effect">
+            💫 ڈریم چینجر – آپ کی قسمت بدلنے کا راز 💫
+        </h1>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-8 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <!-- Highlighted Text -->
+            <div class="mb-6 p-4 bg-gradient-to-r from-gold to-dark-gold rounded-lg">
+                <h2 class="text-xl md:text-2xl font-bold text-black animate-bounce-slow">
+                    ⚡ یہ راز صرف اسی ویڈیو میں ہے – آخر تک دیکھو، سب کچھ بدل جائے گا! ⚡
+                </h2>
+            </div>
+            
+            <!-- Video Player -->
+            <div class="mb-8">
+                <div class="relative w-full max-w-2xl mx-auto bg-gray-800 rounded-lg overflow-hidden">
+                    <div class="aspect-video">
+                        <iframe 
+                            src="https://player.vimeo.com/video/1115455822?h=1234567890abcdef&title=0&byline=0&portrait=0&autoplay=0" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture" 
+                            allowfullscreen
+                            class="w-full h-full rounded-lg"
+                            title="ٹوٹل ٹرک ویڈیو"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Primary CTA Button -->
+            <a href="#" class="block w-full max-w-md mx-auto">
+                <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow">
+                    👇 ابھی کھیلنا شروع کرو – موقع ہاتھ سے نہ جانے دو 👇
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Trust Proof Section -->
+    <section class="py-8 px-4 bg-gradient-to-b from-gray-900 to-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-gold mb-4">
+                🔥 ابھی بھی شک ہے؟ 🔥
+            </h2>
+            <p class="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
+                ہمارے پاس ایک اسپیشل چینل ہے جہاں ہزاروں لوگ روزانہ اپنے جیت کے پروف شئیر کرتے ہیں۔ اگر شک ہے تو خود ثبوت دیکھ لو!
+            </p>
+            <a href="#" class="inline-block">
+                <button class="py-3 px-6 bg-gradient-to-r from-gold to-dark-gold text-black text-lg font-bold rounded-full hover:scale-105 transition-transform duration-200">
+                    🔥 پروف دیکھنے کے لئے یہاں کلک کریں 🔥
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Step by Step Guide -->
+    <section class="py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gold mb-8">
+                📋 آسان طریقہ کار 📋
+            </h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Step 1 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg text-center border-2 border-gold">
+                    <div class="text-4xl mb-4">1️⃣</div>
+                    <h3 class="text-xl font-bold text-gold mb-2">پہلا قدم</h3>
+                    <p class="text-gray-300">1000 ڈالو → 2000 بیلنس پاؤ</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg text-center border-2 border-gold">
+                    <div class="text-4xl mb-4">2️⃣</div>
+                    <h3 class="text-xl font-bold text-gold mb-2">دوسرا قدم</h3>
+                    <p class="text-gray-300">597 یا 786 پر بیٹ لگاؤ → ہمیشہ جیتنے کا موقع</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg text-center border-2 border-gold">
+                    <div class="text-4xl mb-4">3️⃣</div>
+                    <h3 class="text-xl font-bold text-gold mb-2">تیسرا قدم</h3>
+                    <p class="text-gray-300">پروفائل ویری فائی کرو → فوری ودڈرال لو</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="py-8 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gold mb-8">
+                💬 کسٹمر رائے 💬
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
+                            👤
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">احمد علی ✅</h4>
+                            <p class="text-sm text-gray-400">کراچی</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">میں نے 15,000 کمایا – یہ 100% اصلی ہے!</p>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
+                            👤
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">فاطمہ خان ✅</h4>
+                            <p class="text-sm text-gray-400">لاہور</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">صرف 2 دن میں 25,000 جیتا، واقعی زبردست ٹرک ہے!</p>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
+                            👤
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">عمر فاروق ✅</h4>
+                            <p class="text-sm text-gray-400">اسلام آباد</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">پہلے شک تھا، اب یقین ہے – روزانہ کی کمائی کر رہا ہوں۔</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Slider -->
+    <section class="py-8 px-4 bg-black">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-gold mb-8">
+                📱 اصل کمائی کے موبائل اسکرین شاٹس 📱
+            </h2>
+            <div class="overflow-hidden">
+                <div class="flex animate-slide">
+                    <!-- Screenshot 1 -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 h-96 rounded-lg border-2 border-gold flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📱</div>
+                                <p class="text-gold font-bold">15,000 کمائی</p>
+                                <p class="text-sm text-gray-300">احمد علی</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 2 -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 h-96 rounded-lg border-2 border-gold flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📱</div>
+                                <p class="text-gold font-bold">25,000 جیت</p>
+                                <p class="text-sm text-gray-300">فاطمہ خان</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 3 -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 h-96 rounded-lg border-2 border-gold flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📱</div>
+                                <p class="text-gold font-bold">50,000 بیلنس</p>
+                                <p class="text-sm text-gray-300">عمر فاروق</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 4 -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 h-96 rounded-lg border-2 border-gold flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📱</div>
+                                <p class="text-gold font-bold">75,000 کمائی</p>
+                                <p class="text-sm text-gray-300">سارہ احمد</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 5 -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-gradient-to-br from-gray-700 to-gray-800 h-96 rounded-lg border-2 border-gold flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">📱</div>
+                                <p class="text-gold font-bold">1,00,000 جیت</p>
+                                <p class="text-sm text-gray-300">علی رضا</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-12 px-4 bg-gradient-to-b from-gray-900 to-black text-center">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-gold mb-6 animate-bounce-slow">
+                ⚡ قسمت بدلنے کا وقت آ گیا ہے – ابھی کھیلنا شروع کرو! ⚡
+            </h2>
+            <a href="#" class="inline-block">
+                <button class="py-5 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-2xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow">
+                    👇 ابھی جوائن کرو اور کمائی شروع کرو 👇
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Sticky Footer CTA -->
+    <div class="sticky-cta">
+        <a href="#" class="block">
+                            <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-lg font-bold rounded-full glow-effect animate-glow">
+                    🔥 ابھی جوائن کرو 🔥
+                </button>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-6 px-4 bg-black border-t-2 border-gold text-center">
+        <p class="text-gray-400 text-sm">
+            © 2024 ڈریم چینجر - تمام حقوق محفوظ ہیں
+        </p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to sticky CTA
+        window.addEventListener('scroll', function() {
+            const stickyCta = document.querySelector('.sticky-cta');
+            if (window.scrollY > 100) {
+                stickyCta.style.opacity = '1';
+                stickyCta.style.transform = 'translateY(0)';
+            } else {
+                stickyCta.style.opacity = '0';
+                stickyCta.style.transform = 'translateY(100px)';
+            }
+        });
+
+        // Initialize sticky CTA
+        document.querySelector('.sticky-cta').style.opacity = '0';
+        document.querySelector('.sticky-cta').style.transform = 'translateY(100px)';
+        document.querySelector('.sticky-cta').style.transition = 'all 0.3s ease';
+    </script>
+</body>
+</html>
