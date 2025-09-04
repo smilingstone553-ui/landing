@@ -17,7 +17,7 @@
                     },
                     animation: {
                         'glow': 'glow 2s ease-in-out infinite alternate',
-                        'slide': 'slide 20s linear infinite',
+                        'slide': 'slide 60s linear infinite',
                         'bounce-slow': 'bounce 3s infinite'
                     },
                     keyframes: {
@@ -65,12 +65,200 @@
             z-index: 1000;
         }
         
+        .seamless-slide {
+            animation: seamless-slide 60s linear infinite;
+        }
+        
+        @keyframes seamless-slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
         @media (max-width: 768px) {
             .sticky-cta {
                 bottom: 10px;
                 left: 10px;
                 right: 10px;
                 transform: none;
+            }
+        }
+        /* Video Navigation Styles */
+        .video-nav-btn {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .video-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .video-nav-btn.active {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .video-item {
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-nav-arrow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .video-nav-arrow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+        
+        .enhanced-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .enhanced-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Video Container Fixes */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            background: #374151;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0.75rem;
+            background: transparent;
+        }
+        
+        /* Ensure video items are properly positioned */
+        .video-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-item.active {
+            z-index: 15;
+        }
+        
+        .video-item.hidden {
+            z-index: 5;
+        }
+        
+        /* Loading indicator */
+        .video-loading {
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        
+        .video-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Video placeholder and play button styles */
+        .video-placeholder {
+            transition: all 0.3s ease;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            display: flex !important;
+            background-color: #4B5563 !important;
+        }
+        
+        .play-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Ensure video items are properly positioned */
+        .video-item {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-item.active {
+            z-index: 10;
+            display: block !important;
+        }
+        
+        .video-item.hidden {
+            z-index: 1;
+            display: none !important;
+        }
+        
+        /* Video play overlay */
+        .video-play-overlay {
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.7) !important;
+            transform: scale(1.05);
+        }
+        
+        /* Mobile specific adjustments for 1920x1080 videos */
+        @media (max-width: 768px) {
+            .video-nav-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1.125rem;
+            }
+            
+            .video-container {
+                border-radius: 1rem;
+                min-height: 400px;
+            }
+            
+            .video-container iframe {
+                border-radius: 1rem;
+                min-height: 400px;
+            }
+            
+            /* Custom aspect ratio for 1920x1080 videos on mobile */
+            .mobile-video-aspect {
+                aspect-ratio: 9/16;
+                min-height: 400px;
+                max-height: 600px;
+                width: 100%;
+                position: relative;
+            }
+        }
+        
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .video-container {
+                min-height: 300px;
+            }
+            
+            .video-container iframe {
+                min-height: 300px;
+            }
+            
+            .mobile-video-aspect {
+                min-height: 300px;
+                max-height: 450px;
+                aspect-ratio: 9/16;
             }
         }
     </style>
@@ -97,16 +285,13 @@
             <div class="mb-8">
                 <div class="relative w-full max-w-2xl mx-auto bg-gray-800 rounded-lg overflow-hidden">
                     <div class="aspect-video">
-                        <iframe 
-                            src="https://player.vimeo.com/video/1115455822?h=1234567890abcdef&title=0&byline=0&portrait=0&autoplay=0" 
-                            width="100%" 
-                            height="100%" 
-                            frameborder="0" 
-                            allow="autoplay; fullscreen; picture-in-picture" 
-                            allowfullscreen
-                            class="w-full h-full rounded-lg"
-                            title="ٹوٹل ٹرک ویڈیو"
-                        ></iframe>
+                        <div class="video-container">
+                            <iframe 
+                                src="https://player.vimeo.com/video/1115795936?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
+                                title="ٹوٹل ٹرک ویڈیو"
+                                style="width: 100%; height: 100%;"
+                            ></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,6 +302,225 @@
                     👇 ابھی کھیلنا شروع کرو – موقع ہاتھ سے نہ جانے دو 👇
                 </button>
             </a>
+        </div>
+    </section>
+
+    <!-- Live Proof Influencer Section -->
+    <section class="py-12 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gold mb-8 animate-bounce-slow">
+                🎥 Live Proof Influencer - Real Time Results 🎥
+            </h2>
+            
+            <!-- Video Navigation Numbers -->
+            <div class="flex justify-center mb-6 space-x-4 rtl:space-x-reverse">
+                <button class="video-nav-btn active bg-gold text-black px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="0">1</button>
+                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="1">2</button>
+                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="2">3</button>
+            </div>
+            
+            <!-- Video Container -->
+            <div class="relative w-full max-w-md mx-auto md:max-w-6xl">
+                <!-- Mobile: Single Video with Swipe -->
+                <div class="md:hidden">
+                    <div class="relative bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                        <div class="mobile-video-aspect bg-gray-700 relative" style="min-height: 400px;">
+                            <!-- Video 1 -->
+                            <div class="video-item active video-container" data-video="0">
+                                <div class="video-placeholder bg-gray-600 rounded-lg flex items-center justify-center h-full">
+                                    <div class="text-center text-white">
+                                        <div class="text-6xl mb-4">🎥</div>
+                                        <p class="text-lg mb-2">Video 1 Loading...</p>
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(0)">
+                                            ▶️ Play Video 1
+                                        </button>
+                                    </div>
+                                </div>
+                                <iframe 
+                                    src=""
+                                    title="Live Proof Video 1"
+                                    style="width: 100%; height: 100%; display: none;"
+                                    loading="lazy"
+                                    data-video-index="0"
+                                ></iframe>
+                            </div>
+                            
+                            <!-- Video 2 -->
+                            <div class="video-item hidden video-container" data-video="1">
+                                <div class="video-placeholder bg-gray-600 rounded-lg flex items-center justify-center h-full">
+                                    <div class="text-center text-white">
+                                        <div class="text-6xl mb-4">🎥</div>
+                                        <p class="text-lg mb-2">Video 2 Loading...</p>
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(1)">
+                                            ▶️ Play Video 2
+                                        </button>
+                                    </div>
+                                </div>
+                                <iframe 
+                                    src=""
+                                    title="Live Proof Video 2"
+                                    style="width: 100%; height: 100%; display: none;"
+                                    loading="lazy"
+                                    data-video-index="1"
+                                ></iframe>
+                            </div>
+                            
+                            <!-- Video 3 -->
+                            <div class="video-item hidden video-container" data-video="2">
+                                <div class="video-placeholder bg-gray-600 rounded-lg flex items-center justify-center h-full">
+                                    <div class="text-center text-white">
+                                        <div class="text-6xl mb-4">🎥</div>
+                                        <p class="text-lg mb-2">Video 3 Loading...</p>
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(2)">
+                                            ▶️ Play Video 3
+                                        </button>
+                                    </div>
+                                </div>
+                                <iframe 
+                                    src=""
+                                    title="Live Proof Video 3"
+                                    style="width: 100%; height: 100%; display: none;"
+                                    loading="lazy"
+                                    data-video-index="2"
+                                ></iframe>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Navigation Arrows -->
+                        <button class="video-nav-arrow prev-arrow absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <button class="video-nav-arrow next-arrow absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- LIVE Badge -->
+                        <div class="absolute top-3 left-3 bg-urgent-red text-white px-2 py-1 rounded-full text-xs font-bold">
+                            LIVE
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Video Info -->
+                    <div class="text-center mt-4">
+                        <p class="text-gold font-semibold text-lg">
+                            <span class="video-title" data-video="0">🎯 پہلا راز - 100% جیت</span>
+                            <span class="video-title hidden" data-video="1">💰 دوسرا راز - فوری کمائی</span>
+                            <span class="video-title hidden" data-video="2">🚀 تیسرا راز - مکمل گائیڈ</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Desktop: 3 Videos Grid -->
+                <div class="hidden md:grid md:grid-cols-3 gap-6">
+                    <!-- Video 1 -->
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
+                        <div class="relative mb-4">
+                            <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                                <div class="video-container">
+                                    <iframe 
+                                        src="https://player.vimeo.com/video/1115795936?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
+                                        title="Live Proof Video 1"
+                                        style="width: 100%; height: 100%;"
+                                    ></iframe>
+                                </div>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-urgent-red text-white px-2 py-1 rounded-full text-xs font-bold">
+                                LIVE
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-gold mb-2 text-center">🎯 پہلا راز - 100% جیت</h3>
+                        <p class="text-gray-300 text-sm text-center">ابھی دیکھو اور جانیں کیسے جیتنا ہے</p>
+                    </div>
+                    
+                    <!-- Video 2 -->
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
+                        <div class="relative mb-4">
+                            <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                                <div class="video-container">
+                                    <iframe 
+                                        src="https://player.vimeo.com/video/1115840668?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
+                                        title="Live Proof Video 2"
+                                        style="width: 100%; height: 100%;"
+                                    ></iframe>
+                                </div>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-urgent-red text-white px-2 py-1 rounded-full text-xs font-bold">
+                                LIVE
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-gold mb-2 text-center">💰 دوسرا راز - فوری کمائی</h3>
+                        <p class="text-gray-300 text-sm text-center">597 اور 786 کا راز جانیں</p>
+                    </div>
+                    
+                    <!-- Video 3 -->
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
+                        <div class="relative mb-4">
+                            <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                                <div class="video-container">
+                                    <iframe 
+                                        src="https://player.vimeo.com/video/1115840710?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
+                                        title="Live Proof Video 3"
+                                        style="width: 100%; height: 100%;"
+                                    ></iframe>
+                                </div>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-urgent-red text-white px-2 py-1 rounded-full text-xs font-bold">
+                                LIVE
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-gold mb-2 text-center">🚀 تیسرا راز - مکمل گائیڈ</h3>
+                        <p class="text-gray-300 text-sm text-center">پروفائل ویری فیکیشن کا طریقہ</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Stats -->
+            <div class="bg-gradient-to-r from-gold to-dark-gold p-1 rounded-2xl mb-8">
+                <div class="bg-black p-6 rounded-2xl">
+                    <div class="grid md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="text-3xl font-bold text-gold mb-2">🎯</div>
+                            <div class="text-2xl font-bold text-gold">99.9%</div>
+                            <p class="text-gray-300">جیت کی شرح</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-gold mb-2">💰</div>
+                            <div class="text-2xl font-bold text-gold">50,000+</div>
+                            <p class="text-gray-300">خوشگوار صارفین</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-gold mb-2">⚡</div>
+                            <div class="text-2xl font-bold text-gold">5 منٹ</div>
+                            <p class="text-gray-300">فوری کمائی</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Winner Alert -->
+            <div class="text-center mb-8">
+                <div class="bg-gradient-to-r from-urgent-red to-dark-red p-1 rounded-full inline-block animate-pulse">
+                    <div class="bg-black px-6 py-3 rounded-full">
+                        <p class="text-white font-bold text-lg">
+                            🏆 LIVE: احمد علی نے ابھی 25,000 جیتے! 🏆
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video CTA -->
+            <div class="text-center">
+                <a href="https://dreambetx.cc/" class="inline-block">
+                    <button class="py-4 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200">
+                        🎬 ابھی ویڈیوز دیکھیں اور جیتیں! 🎬
+                    </button>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -227,7 +631,8 @@
                 📱 اصل کمائی کے موبائل اسکرین شاٹس 📱
             </h2>
             <div class="overflow-hidden">
-                <div class="flex animate-slide">
+                <div class="flex seamless-slide">
+                    <!-- First Set of Screenshots -->
                     <!-- Screenshot 1 - Success Transaction -->
                     <div class="flex-shrink-0 w-64 mx-2">
                         <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
@@ -292,6 +697,77 @@
                     </div>
                     
                     <!-- Screenshot 10 - Download 6 (1) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (6) (1).jpeg" alt="Transaction Proof 8" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Duplicate Set for Seamless Loop -->
+                    <!-- Screenshot 1 - Success Transaction (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="Success.jpeg" alt="40,800 PKR Transaction Success" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 2 - JazzCash Account (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="Jazzcash Account _ Jazzcash Screen - 4 _ Jazzcash Account In 14 August Day.jpeg" alt="JazzCash Account Balance" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 3 - Download 1 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download.jpeg" alt="Transaction Proof 1" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 4 - Download 2 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (1).jpeg" alt="Transaction Proof 2" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 5 - Download 3 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (2).jpeg" alt="Transaction Proof 3" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 6 - Download 4 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (3).jpeg" alt="Transaction Proof 4" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 7 - Download 5 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (4).jpeg" alt="Transaction Proof 5" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 8 - Download 6 (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (5).jpeg" alt="Transaction Proof 6" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 9 - Download 6 (1) (Duplicate) -->
+                    <div class="flex-shrink-0 w-64 mx-2">
+                        <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
+                            <img src="download (6).jpeg" alt="Transaction Proof 7" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                    
+                    <!-- Screenshot 10 - Download 6 (1) (Duplicate) -->
                     <div class="flex-shrink-0 w-64 mx-2">
                         <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
                             <img src="download (6) (1).jpeg" alt="Transaction Proof 8" class="w-full h-full object-cover" />
@@ -363,6 +839,245 @@
         document.querySelector('.sticky-cta').style.opacity = '0';
         document.querySelector('.sticky-cta').style.transform = 'translateY(100px)';
         document.querySelector('.sticky-cta').style.transition = 'all 0.3s ease';
+
+        // Video Gallery Functionality
+        let currentVideo = 0;
+        const totalVideos = 3;
+
+        // Video management functions - Define these first!
+        const videoUrls = [
+            'https://player.vimeo.com/video/1115795936?title=0&byline=0&portrait=0&autoplay=0&controls=1&dnt=1',
+            'https://player.vimeo.com/video/1115840668?title=0&byline=0&portrait=0&autoplay=0&controls=1&dnt=1',
+            'https://player.vimeo.com/video/1115840710?title=0&byline=0&portrait=0&autoplay=0&controls=1&dnt=1'
+        ];
+
+        // Global functions for video management
+        window.loadVideo = function(videoIndex) {
+            console.log('Loading video:', videoIndex);
+            const videoContainer = document.querySelector(`[data-video="${videoIndex}"]`);
+            const placeholder = videoContainer.querySelector('.video-placeholder');
+            const iframe = videoContainer.querySelector('iframe');
+            
+            if (placeholder && iframe) {
+                // Hide placeholder and show iframe
+                placeholder.style.display = 'none';
+                iframe.style.display = 'block';
+                
+                // Set video source with user interaction parameters
+                const videoUrl = videoUrls[videoIndex] + '&autoplay=0&muted=0';
+                iframe.src = videoUrl;
+                
+                // Add event listeners for this iframe
+                iframe.addEventListener('load', function() {
+                    console.log('Video', videoIndex, 'loaded successfully');
+                    iframe.style.display = 'block';
+                    
+                    // Add click-to-play overlay
+                    const playOverlay = document.createElement('div');
+                    playOverlay.className = 'video-play-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer z-20';
+                    playOverlay.innerHTML = `
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">▶️</div>
+                            <p class="text-lg">Click to Play</p>
+                        </div>
+                    `;
+                    
+                    // Remove existing overlay if any
+                    const existingOverlay = iframe.parentElement.querySelector('.video-play-overlay');
+                    if (existingOverlay) {
+                        existingOverlay.remove();
+                    }
+                    
+                    iframe.parentElement.appendChild(playOverlay);
+                    
+                    // Play video when overlay is clicked
+                    playOverlay.addEventListener('click', function() {
+                        console.log('User clicked to play video:', videoIndex);
+                        playOverlay.remove();
+                        // Video will start playing due to user interaction
+                    });
+                });
+                
+                iframe.addEventListener('error', function() {
+                    console.log('Video', videoIndex, 'failed to load');
+                    // Show error message and retry button
+                    placeholder.innerHTML = `
+                        <div class="text-center text-white">
+                            <div class="text-6xl mb-4">❌</div>
+                            <p class="text-lg mb-2">Video ${videoIndex + 1} failed to load</p>
+                            <button class="play-btn bg-red-500 text-white px-6 py-3 rounded-full font-bold hover:bg-red-600 transition-colors" onclick="loadVideo(${videoIndex})">
+                                🔄 Retry Video ${videoIndex + 1}
+                            </button>
+                        </div>
+                    `;
+                    placeholder.style.display = 'flex';
+                    iframe.style.display = 'none';
+                });
+                
+                console.log('Video loading started for index:', videoIndex);
+            }
+        };
+
+        // Function to show video
+        function showVideo(videoIndex) {
+            console.log('Switching to video:', videoIndex);
+            
+            // Hide all videos
+            document.querySelectorAll('.video-item').forEach(item => {
+                item.classList.add('hidden');
+                item.classList.remove('active');
+            });
+            
+            // Hide all video titles
+            document.querySelectorAll('.video-title').forEach(title => {
+                title.classList.add('hidden');
+            });
+            
+            // Show selected video
+            const selectedVideo = document.querySelector(`[data-video="${videoIndex}"]`);
+            if (selectedVideo) {
+                selectedVideo.classList.remove('hidden');
+                selectedVideo.classList.add('active');
+                console.log('Video shown:', selectedVideo);
+                
+                // Check if video is already loaded
+                const iframe = selectedVideo.querySelector('iframe');
+                const placeholder = selectedVideo.querySelector('.video-placeholder');
+                
+                if (iframe && placeholder) {
+                    if (iframe.src && iframe.src !== '') {
+                        // Video is already loaded, show it
+                        placeholder.style.display = 'none';
+                        iframe.style.display = 'block';
+                        console.log('Video already loaded, showing iframe');
+                    } else {
+                        // Video not loaded yet, show placeholder
+                        placeholder.style.display = 'flex';
+                        iframe.style.display = 'none';
+                        console.log('Video not loaded, showing placeholder');
+                    }
+                }
+            } else {
+                console.log('Video not found for index:', videoIndex);
+            }
+            
+            // Show selected video title
+            const selectedTitle = document.querySelector(`.video-title[data-video="${videoIndex}"]`);
+            if (selectedTitle) {
+                selectedTitle.classList.remove('hidden');
+            }
+            
+            // Update navigation buttons
+            document.querySelectorAll('.video-nav-btn').forEach((btn, index) => {
+                if (index === videoIndex) {
+                    btn.classList.remove('bg-gray-600', 'text-white');
+                    btn.classList.add('bg-gold', 'text-black');
+                } else {
+                    btn.classList.remove('bg-gold', 'text-black');
+                    btn.classList.add('bg-gray-600', 'text-white');
+                }
+            });
+            
+            currentVideo = videoIndex;
+        }
+
+        // Navigation button clicks
+        document.querySelectorAll('.video-nav-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                console.log('Button clicked for video:', index);
+                showVideo(index);
+            });
+        });
+
+        // Arrow navigation
+        document.querySelectorAll('.prev-arrow').forEach(arrow => {
+            arrow.addEventListener('click', () => {
+                const prevVideo = (currentVideo - 1 + totalVideos) % totalVideos;
+                showVideo(prevVideo);
+            });
+        });
+
+        document.querySelectorAll('.next-arrow').forEach(arrow => {
+            arrow.addEventListener('click', () => {
+                const nextVideo = (currentVideo + 1) % totalVideos;
+                showVideo(nextVideo);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                const prevVideo = (currentVideo - 1 + totalVideos) % totalVideos;
+                showVideo(prevVideo);
+            } else if (e.key === 'ArrowRight') {
+                const nextVideo = (currentVideo + 1) % totalVideos;
+                showVideo(nextVideo);
+            }
+        });
+
+
+
+        // Initialize video gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Video gallery initialized');
+            
+            // Debug: Check if video placeholders exist
+            const placeholders = document.querySelectorAll('.video-placeholder');
+            console.log('Found video placeholders:', placeholders.length);
+            
+            placeholders.forEach((placeholder, index) => {
+                console.log(`Placeholder ${index}:`, placeholder);
+                console.log(`Placeholder display:`, placeholder.style.display);
+                console.log(`Placeholder visible:`, placeholder.offsetWidth > 0 && placeholder.offsetHeight > 0);
+            });
+            
+            showVideo(0); // Show first video by default
+            console.log('First video placeholder should now be visible');
+            
+            // Debug: Check first video state
+            const firstVideo = document.querySelector('.video-item.active');
+            if (firstVideo) {
+                const placeholder = firstVideo.querySelector('.video-placeholder');
+                const iframe = firstVideo.querySelector('iframe');
+                console.log('First video container:', firstVideo);
+                console.log('First video placeholder:', placeholder);
+                console.log('First video iframe:', iframe);
+                if (placeholder) {
+                    console.log('Placeholder display style:', placeholder.style.display);
+                    console.log('Placeholder computed display:', window.getComputedStyle(placeholder).display);
+                }
+            }
+        });
+
+        // Touch/swipe functionality for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next video
+                    const nextVideo = (currentVideo + 1) % totalVideos;
+                    showVideo(nextVideo);
+                } else {
+                    // Swipe right - previous video
+                    const prevVideo = (currentVideo - 1 + totalVideos) % totalVideos;
+                    showVideo(prevVideo);
+                }
+            }
+        }
     </script>
 </body>
 </html>
