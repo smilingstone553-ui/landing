@@ -2018,6 +2018,144 @@
             }
         });
         
+        // Analytics Testing and Debug System
+        let analyticsTestMode = false; // Set to false in production
+        let eventLog = [];
+        
+        // Function to log events for testing
+        function logAnalyticsEvent(eventName, eventData) {
+            if (analyticsTestMode) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = {
+                    time: timestamp,
+                    event: eventName,
+                    data: eventData
+                };
+                eventLog.push(logEntry);
+                
+                // Log to console with color coding
+                console.log(`%c[${timestamp}] ${eventName}`, 'color: #4CAF50; font-weight: bold;', eventData);
+                
+                // Update test panel if it exists
+                updateTestPanel();
+            }
+        }
+        
+        // Create test panel for real-time event monitoring
+        function createTestPanel() {
+            if (!analyticsTestMode) return;
+            
+            const testPanel = document.createElement('div');
+            testPanel.id = 'analytics-test-panel';
+            testPanel.style.cssText = `
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                width: 400px;
+                max-height: 500px;
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 15px;
+                border-radius: 10px;
+                font-family: monospace;
+                font-size: 12px;
+                z-index: 10000;
+                overflow-y: auto;
+                border: 2px solid #4CAF50;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            `;
+            
+            testPanel.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; color: #4CAF50;">🎯 Analytics Test Panel</h3>
+                    <button onclick="toggleTestPanel()" style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Hide</button>
+                </div>
+                <div id="event-counter" style="margin-bottom: 10px; padding: 5px; background: rgba(76, 175, 80, 0.2); border-radius: 5px;">
+                    <strong>Events Tracked: <span id="event-count">0</span></strong>
+                </div>
+                <div id="engagement-score" style="margin-bottom: 10px; padding: 5px; background: rgba(33, 150, 243, 0.2); border-radius: 5px;">
+                    <strong>Engagement Score: <span id="score-value">0</span>/100</strong>
+                </div>
+                <div id="user-stats" style="margin-bottom: 10px; padding: 5px; background: rgba(255, 193, 7, 0.2); border-radius: 5px;">
+                    <div>Time on Page: <span id="time-value">0</span>s</div>
+                    <div>Scroll Depth: <span id="scroll-value">0</span>%</div>
+                    <div>Video Interactions: <span id="video-value">0</span></div>
+                </div>
+                <div id="recent-events" style="max-height: 200px; overflow-y: auto;">
+                    <strong>Recent Events:</strong>
+                    <div id="events-list"></div>
+                </div>
+                <div style="margin-top: 10px; text-align: center;">
+                    <button onclick="clearEventLog()" style="background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 5px;">Clear Log</button>
+                    <button onclick="exportEventLog()" style="background: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Export</button>
+                </div>
+            `;
+            
+            document.body.appendChild(testPanel);
+        }
+        
+        // Update test panel with current data
+        function updateTestPanel() {
+            if (!analyticsTestMode) return;
+            
+            const panel = document.getElementById('analytics-test-panel');
+            if (!panel) return;
+            
+            // Update counters
+            document.getElementById('event-count').textContent = eventLog.length;
+            document.getElementById('score-value').textContent = calculateEngagementScore();
+            document.getElementById('time-value').textContent = timeOnPage;
+            document.getElementById('scroll-value').textContent = scrollDepthPercentage;
+            document.getElementById('video-value').textContent = videoInteractionCount;
+            
+            // Update recent events
+            const eventsList = document.getElementById('events-list');
+            const recentEvents = eventLog.slice(-10).reverse();
+            eventsList.innerHTML = recentEvents.map(event => `
+                <div style="margin: 2px 0; padding: 2px; background: rgba(255, 255, 255, 0.1); border-radius: 3px;">
+                    <span style="color: #4CAF50;">${event.time}</span> - 
+                    <span style="color: #2196F3;">${event.event}</span>
+                </div>
+            `).join('');
+        }
+        
+        // Toggle test panel visibility
+        window.toggleTestPanel = function() {
+            const panel = document.getElementById('analytics-test-panel');
+            if (panel) {
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            }
+        };
+        
+        // Clear event log
+        window.clearEventLog = function() {
+            eventLog = [];
+            updateTestPanel();
+            console.log('🧹 Event log cleared');
+        };
+        
+        // Export event log
+        window.exportEventLog = function() {
+            const dataStr = JSON.stringify(eventLog, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'analytics-events-' + new Date().toISOString().slice(0, 19) + '.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            console.log('📁 Event log exported');
+        };
+        
+        // Enhanced gtag function to log events
+        const originalGtag = window.gtag;
+        window.gtag = function() {
+            if (analyticsTestMode && arguments[0] === 'event') {
+                logAnalyticsEvent(arguments[1], arguments[2]);
+            }
+            return originalGtag.apply(this, arguments);
+        };
+        
         // Initialize comprehensive tracking summary
         console.log('🎯 Google Analytics Enhanced Tracking Initialized');
         console.log('📊 Tracking Events:');
@@ -2039,6 +2177,10 @@
         console.log('🎯 User Behavior Tracking: Mouse movements, clicks, scrolls, key presses');
         console.log('📊 Engagement Metrics: Time on page, scroll depth, video interactions, section visits');
         console.log('🔄 Real-time Tracking: Activity sessions, engagement levels, user journey');
+        console.log('🧪 Test Mode: ON - Analytics events will be logged to console and test panel');
+        
+        // Create test panel after page load
+        setTimeout(createTestPanel, 1000);
     </script>
 </body>
 </html>
