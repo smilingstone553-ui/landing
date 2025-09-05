@@ -980,7 +980,6 @@
 
         // Global functions for video management
         window.loadVideo = function(videoIndex) {
-            console.log('Loading video:', videoIndex);
             const videoContainer = document.querySelector(`[data-video="${videoIndex}"]`);
             const placeholder = videoContainer.querySelector('.video-placeholder');
             const iframe = videoContainer.querySelector('iframe');
@@ -996,7 +995,6 @@
                 
                 // Add event listeners for this iframe
                 iframe.addEventListener('load', function() {
-                    console.log('Video', videoIndex, 'loaded successfully');
                     iframe.style.display = 'block';
                     
                     // Add click-to-play overlay
@@ -1019,14 +1017,12 @@
                     
                     // Play video when overlay is clicked
                     playOverlay.addEventListener('click', function() {
-                        console.log('User clicked to play video:', videoIndex);
                         playOverlay.remove();
                         // Video will start playing due to user interaction
                     });
                 });
                 
                 iframe.addEventListener('error', function() {
-                    console.log('Video', videoIndex, 'failed to load');
                     // Show error message and retry button
                     placeholder.innerHTML = `
                         <div class="text-center text-white">
@@ -1040,15 +1036,11 @@
                     placeholder.style.display = 'flex';
                     iframe.style.display = 'none';
                 });
-                
-                console.log('Video loading started for index:', videoIndex);
             }
         };
 
         // Function to show video
         function showVideo(videoIndex) {
-            console.log('Switching to video:', videoIndex);
-            
             // Hide all videos
             document.querySelectorAll('.video-item').forEach(item => {
                 item.classList.add('hidden');
@@ -1065,7 +1057,6 @@
             if (selectedVideo) {
                 selectedVideo.classList.remove('hidden');
                 selectedVideo.classList.add('active');
-                console.log('Video shown:', selectedVideo);
                 
                 // Check if video is already loaded
                 const iframe = selectedVideo.querySelector('iframe');
@@ -1076,16 +1067,12 @@
                         // Video is already loaded, show it
                         placeholder.style.display = 'none';
                         iframe.style.display = 'block';
-                        console.log('Video already loaded, showing iframe');
                     } else {
                         // Video not loaded yet, show placeholder
                         placeholder.style.display = 'flex';
                         iframe.style.display = 'none';
-                        console.log('Video not loaded, showing placeholder');
                     }
                 }
-            } else {
-                console.log('Video not found for index:', videoIndex);
             }
             
             // Show selected video title
@@ -1111,7 +1098,6 @@
         // Navigation button clicks
         document.querySelectorAll('.video-nav-btn').forEach((btn, index) => {
             btn.addEventListener('click', () => {
-                console.log('Button clicked for video:', index);
                 showVideo(index);
             });
         });
@@ -1146,34 +1132,7 @@
 
         // Initialize video gallery
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Video gallery initialized');
-            
-            // Debug: Check if video placeholders exist
-            const placeholders = document.querySelectorAll('.video-placeholder');
-            console.log('Found video placeholders:', placeholders.length);
-            
-            placeholders.forEach((placeholder, index) => {
-                console.log(`Placeholder ${index}:`, placeholder);
-                console.log(`Placeholder display:`, placeholder.style.display);
-                console.log(`Placeholder visible:`, placeholder.offsetWidth > 0 && placeholder.offsetHeight > 0);
-            });
-            
             showVideo(0); // Show first video by default
-            console.log('First video placeholder should now be visible');
-            
-            // Debug: Check first video state
-            const firstVideo = document.querySelector('.video-item.active');
-            if (firstVideo) {
-                const placeholder = firstVideo.querySelector('.video-placeholder');
-                const iframe = firstVideo.querySelector('iframe');
-                console.log('First video container:', firstVideo);
-                console.log('First video placeholder:', placeholder);
-                console.log('First video iframe:', iframe);
-                if (placeholder) {
-                    console.log('Placeholder display style:', placeholder.style.display);
-                    console.log('Placeholder computed display:', window.getComputedStyle(placeholder).display);
-                }
-            }
         });
 
         // Touch/swipe functionality for mobile
@@ -1394,18 +1353,32 @@
                 const gaVideoButton = target.getAttribute('data-ga-video-button');
                 const gaVideoNav = target.getAttribute('data-ga-video-nav');
                 
+                // ADDITIONAL DREAMBETX CLICK DETECTION - Catch all possible DreamBetX clicks
+                if (href && href.includes('dreambetx.cc')) {
+                    // Fire dbx_button_click event for ANY DreamBetX link
+                    gtag('event', 'dbx_button_click', {
+                        event_category: 'conversion',
+                        event_label: buttonText,
+                        button_text: buttonText,
+                        button_location: buttonLocation,
+                        destination_url: href,
+                        user_engagement_level: userEngagementLevel,
+                        time_on_page: timeOnPage,
+                        scroll_depth: scrollDepthPercentage,
+                        video_interactions: videoInteractionCount,
+                        max_scroll_depth: maxScrollDepth,
+                        sections_viewed: reachedMilestones.length,
+                        conversion_type: 'dreambetx_signup',
+                        timestamp: Date.now(),
+                        click_source: 'additional_detection'
+                    });
+                }
+                
                 // Track external link clicks
                 if (href && (href.includes('dreambetx.cc') || href.includes('t.me'))) {
-                    // Debug: Log CTA click
-                    console.log('🎯 CTA CLICK DETECTED:', {
-                        buttonText: buttonText,
-                        buttonLocation: buttonLocation,
-                        destination: href,
-                        timestamp: new Date().toLocaleTimeString()
-                    });
-                    
-                    // Track DreamBetX button clicks with specific event name
+                    // Track DreamBetX button clicks with specific event name - PRIORITY TRACKING
                     if (href.includes('dreambetx.cc')) {
+                        // Fire dbx_button_click event FIRST and ALWAYS
                         gtag('event', 'dbx_button_click', {
                             event_category: 'conversion',
                             event_label: buttonText,
@@ -1418,7 +1391,8 @@
                             video_interactions: videoInteractionCount,
                             max_scroll_depth: maxScrollDepth,
                             sections_viewed: reachedMilestones.length,
-                            conversion_type: 'dreambetx_signup'
+                            conversion_type: 'dreambetx_signup',
+                            timestamp: Date.now()
                         });
                         
                         // Also track as conversion event
@@ -1432,16 +1406,19 @@
                             custom_parameter_3: scrollDepthPercentage
                         });
                         
-                        console.log('🎯 DreamBetX Button Click Tracked:', {
-                            event: 'dbx_button_click',
+                        // Track user journey for DreamBetX clicks
+                        trackUserJourney('dbx_button_click', {
                             button: buttonText,
                             location: buttonLocation,
-                            destination: href
+                            destination: href,
+                            engagement_level: userEngagementLevel
                         });
                     }
                     
-                    // Call the main CTA tracking function for other links
-                    trackCTAClick(buttonText, buttonLocation, href);
+                    // Call the main CTA tracking function for other links (t.me)
+                    if (href.includes('t.me')) {
+                        trackCTAClick(buttonText, buttonLocation, href);
+                    }
                     
                     // Enhanced tracking with data attributes
                     if (gaEvent && gaLocation && gaDestination) {
@@ -2078,9 +2055,6 @@
                 };
                 eventLog.push(logEntry);
                 
-                // Log to console with color coding
-                console.log(`%c[${timestamp}] ${eventName}`, 'color: #4CAF50; font-weight: bold;', eventData);
-                
                 // Update test panel if it exists
                 updateTestPanel();
             }
@@ -2176,7 +2150,6 @@
         window.clearEventLog = function() {
             eventLog = [];
             updateTestPanel();
-            console.log('🧹 Event log cleared');
         };
         
         // Export event log
@@ -2189,7 +2162,6 @@
             link.download = 'analytics-events-' + new Date().toISOString().slice(0, 19) + '.json';
             link.click();
             URL.revokeObjectURL(url);
-            console.log('📁 Event log exported');
         };
         
         // Enhanced gtag function to log events
@@ -2202,27 +2174,6 @@
         };
         
         // Initialize comprehensive tracking summary
-        console.log('🎯 Google Analytics Enhanced Tracking Initialized');
-        console.log('📊 Tracking Events:');
-        console.log('  ✅ Page Views & Scroll Depth');
-        console.log('  ✅ Video Interactions (Play, Load, Navigation, Visibility)');
-        console.log('  ✅ CTA Button Clicks (All Locations with Journey Tracking)');
-        console.log('  ✅ Section Visibility Tracking (Visit Order & Time)');
-        console.log('  ✅ Customer Reviews & Screenshots');
-        console.log('  ✅ Conversion Funnel Analysis (Step-by-Step)');
-        console.log('  ✅ Device Type & Performance');
-        console.log('  ✅ Exit Intent & Engagement Levels');
-        console.log('  ✅ Enhanced Ecommerce Tracking');
-        console.log('  ✅ Real-time User Behavior (Mouse, Clicks, Scrolls)');
-        console.log('  ✅ User Journey Tracking (Complete Path)');
-        console.log('  ✅ Engagement Score Calculation');
-        console.log('  ✅ Activity Session Tracking');
-        console.log('🔗 GA4 Property: G-WYHB6JCL7D');
-        console.log('📈 Ready to track all user interactions with detailed analytics!');
-        console.log('🎯 User Behavior Tracking: Mouse movements, clicks, scrolls, key presses');
-        console.log('📊 Engagement Metrics: Time on page, scroll depth, video interactions, section visits');
-        console.log('🔄 Real-time Tracking: Activity sessions, engagement levels, user journey');
-        console.log('🧪 Test Mode: ON - Analytics events will be logged to console and test panel');
         
         // Create test panel after page load
         setTimeout(createTestPanel, 1000);
@@ -2240,19 +2191,11 @@
                 event.event === 'dbx_button_click'
             );
             
-            console.log('🎯 CTA CLICK SUMMARY:');
-            console.log('📊 Total CTA Events:', ctaEvents.length);
-            console.log('🎯 DreamBetX Button Clicks (dbx_button_click):', dbxButtonClicks.length);
-            console.log('📋 DreamBetX Click Details:', dbxButtonClicks);
-            
             // Count by destination
             const dreambetxClicks = ctaEvents.filter(event => 
                 event.data && event.data.destination_url && 
                 event.data.destination_url.includes('dreambetx.cc')
             );
-            
-            console.log('🎯 Total DreamBetX Clicks (all events):', dreambetxClicks.length + dbxButtonClicks.length);
-            console.log('📋 All DreamBetX Click Details:', [...dreambetxClicks, ...dbxButtonClicks]);
             
             return {
                 totalCTAClicks: ctaEvents.length,
@@ -2266,8 +2209,6 @@
         
         // Add function to test CTA tracking
         window.testCTATracking = function() {
-            console.log('🧪 Testing DreamBetX Button Tracking...');
-            
             // Simulate a DreamBetX button click
             gtag('event', 'dbx_button_click', {
                 event_category: 'conversion',
@@ -2281,7 +2222,9 @@
                 video_interactions: 2,
                 max_scroll_depth: 75,
                 sections_viewed: 3,
-                conversion_type: 'dreambetx_signup'
+                conversion_type: 'dreambetx_signup',
+                timestamp: Date.now(),
+                click_source: 'test_function'
             });
             
             // Also test conversion event
@@ -2294,10 +2237,22 @@
                 custom_parameter_2: 2,
                 custom_parameter_3: 50
             });
+        };
+        
+        // Add function to test actual button clicks
+        window.testDreamBetXButton = function() {
+            // Create a test button and simulate click
+            const testButton = document.createElement('a');
+            testButton.href = 'https://dreambetx.cc/';
+            testButton.textContent = 'Test DreamBetX Button';
+            testButton.style.display = 'none';
+            document.body.appendChild(testButton);
             
-            console.log('✅ Test DreamBetX button events sent!');
-            console.log('🔍 Check Google Analytics for "dbx_button_click" event');
-            console.log('📊 Or run countCTAClicks() to see local events');
+            // Simulate click
+            testButton.click();
+            
+            // Remove test button
+            document.body.removeChild(testButton);
         };
     </script>
 </body>
