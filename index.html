@@ -1274,22 +1274,48 @@
             }
         });
         
-        // Track section visibility
+        // Enhanced section visibility tracking with user journey
         const sections = document.querySelectorAll('section');
         const observerOptions = {
             threshold: 0.5,
             rootMargin: '0px 0px -100px 0px'
         };
         
+        let sectionVisitOrder = [];
+        let sectionVisitTimes = {};
+        
         const sectionObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const sectionName = entry.target.querySelector('h2')?.textContent || 'Unknown Section';
+                    const sectionId = entry.target.id || 'section_' + Array.from(sections).indexOf(entry.target);
+                    
+                    // Track section visit order
+                    if (!sectionVisitOrder.includes(sectionId)) {
+                        sectionVisitOrder.push(sectionId);
+                        sectionVisitTimes[sectionId] = Date.now();
+                    }
+                    
+                    // Track section view with comprehensive data
                     gtag('event', 'section_view', {
                         event_category: 'engagement',
                         event_label: sectionName,
                         section_name: sectionName,
-                        time_on_page: timeOnPage
+                        section_id: sectionId,
+                        section_order: sectionVisitOrder.indexOf(sectionId) + 1,
+                        time_on_page: timeOnPage,
+                        scroll_depth: scrollDepthPercentage,
+                        video_interactions: videoInteractionCount,
+                        engagement_level: userEngagementLevel
+                    });
+                    
+                    // Track user journey for section visits
+                    trackUserJourney('section_visit', {
+                        section_name: sectionName,
+                        section_id: sectionId,
+                        section_order: sectionVisitOrder.indexOf(sectionId) + 1,
+                        total_sections_visited: sectionVisitOrder.length,
+                        time_in_section: Date.now() - (sectionVisitTimes[sectionId] || Date.now())
                     });
                 }
             });
@@ -1299,8 +1325,9 @@
             sectionObserver.observe(section);
         });
         
-        // Enhanced CTA button tracking
-        function trackCTAClick(buttonText, buttonLocation, destination) {
+        // Enhanced CTA button tracking with detailed user behavior
+        function trackCTAClick(buttonText, buttonLocation, destination, additionalData = {}) {
+            // Track button click with comprehensive data
             gtag('event', 'cta_click', {
                 event_category: 'conversion',
                 event_label: buttonText,
@@ -1310,7 +1337,10 @@
                 user_engagement_level: userEngagementLevel,
                 time_on_page: timeOnPage,
                 scroll_depth: scrollDepthPercentage,
-                video_interactions: videoInteractionCount
+                video_interactions: videoInteractionCount,
+                max_scroll_depth: maxScrollDepth,
+                sections_viewed: reachedMilestones.length,
+                ...additionalData
             });
             
             // Track as conversion event
@@ -1318,7 +1348,33 @@
                 send_to: 'G-WYHB6JCL7D',
                 event_category: 'engagement',
                 event_label: 'cta_click_' + buttonLocation,
-                value: 1
+                value: 1,
+                custom_parameter_1: userEngagementLevel,
+                custom_parameter_2: videoInteractionCount,
+                custom_parameter_3: scrollDepthPercentage
+            });
+            
+            // Track user journey at this point
+            trackUserJourney('cta_click', {
+                button: buttonText,
+                location: buttonLocation,
+                destination: destination,
+                engagement_level: userEngagementLevel
+            });
+        }
+        
+        // Track user journey through the website
+        function trackUserJourney(action, data = {}) {
+            gtag('event', 'user_journey', {
+                event_category: 'user_behavior',
+                event_label: action,
+                action_type: action,
+                timestamp: Date.now(),
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage,
+                video_interactions: videoInteractionCount,
+                engagement_level: userEngagementLevel,
+                ...data
             });
         }
         
@@ -1384,11 +1440,12 @@
             }
         });
         
-        // Video interaction tracking
-        function trackVideoInteraction(action, videoIndex, videoTitle) {
+        // Enhanced video interaction tracking
+        function trackVideoInteraction(action, videoIndex, videoTitle, additionalData = {}) {
             videoInteractionCount++;
             userEngagementLevel = videoInteractionCount > 0 ? 'medium' : userEngagementLevel;
             
+            // Track video interaction with comprehensive data
             gtag('event', 'video_interaction', {
                 event_category: 'video_engagement',
                 event_label: action + '_' + videoTitle,
@@ -1397,11 +1454,40 @@
                 video_title: videoTitle,
                 total_video_interactions: videoInteractionCount,
                 time_on_page: timeOnPage,
-                scroll_depth: scrollDepthPercentage
+                scroll_depth: scrollDepthPercentage,
+                engagement_level: userEngagementLevel,
+                ...additionalData
             });
+            
+            // Track user journey for video interactions
+            trackUserJourney('video_' + action, {
+                video_index: videoIndex,
+                video_title: videoTitle,
+                total_video_interactions: videoInteractionCount,
+                engagement_level: userEngagementLevel
+            });
+            
+            // Track specific video events
+            if (action === 'play') {
+                gtag('event', 'video_play', {
+                    event_category: 'video_engagement',
+                    event_label: 'Video ' + (videoIndex + 1) + ' Started',
+                    video_index: videoIndex,
+                    video_title: videoTitle,
+                    time_on_page: timeOnPage
+                });
+            } else if (action === 'complete') {
+                gtag('event', 'video_complete', {
+                    event_category: 'video_engagement',
+                    event_label: 'Video ' + (videoIndex + 1) + ' Completed',
+                    video_index: videoIndex,
+                    video_title: videoTitle,
+                    time_on_page: timeOnPage
+                });
+            }
         }
         
-        // Enhanced video tracking for Vimeo iframes
+        // Enhanced video tracking for Vimeo iframes with detailed interaction tracking
         function setupVideoTracking() {
             const iframes = document.querySelectorAll('iframe[src*="vimeo"]');
             iframes.forEach((iframe, index) => {
@@ -1411,7 +1497,10 @@
                     const videoId = iframe.getAttribute('data-ga-video-id');
                     const videoType = iframe.getAttribute('data-ga-video-type');
                     
-                    trackVideoInteraction('loaded', index, videoTitle);
+                    trackVideoInteraction('loaded', index, videoTitle, {
+                        video_id: videoId,
+                        video_type: videoType
+                    });
                     
                     // Enhanced video tracking
                     gtag('event', 'video_loaded', {
@@ -1420,7 +1509,8 @@
                         video_id: videoId,
                         video_type: videoType,
                         video_index: index,
-                        time_on_page: timeOnPage
+                        time_on_page: timeOnPage,
+                        engagement_level: userEngagementLevel
                     });
                 });
                 
@@ -1432,7 +1522,11 @@
                         const videoId = iframe.getAttribute('data-ga-video-id');
                         const videoType = iframe.getAttribute('data-ga-video-type');
                         
-                        trackVideoInteraction('play_attempt', index, videoTitle);
+                        trackVideoInteraction('play_attempt', index, videoTitle, {
+                            video_id: videoId,
+                            video_type: videoType,
+                            click_location: 'video_container'
+                        });
                         
                         // Enhanced video click tracking
                         gtag('event', 'video_container_click', {
@@ -1441,10 +1535,30 @@
                             video_id: videoId,
                             video_type: videoType,
                             video_index: index,
-                            time_on_page: timeOnPage
+                            time_on_page: timeOnPage,
+                            engagement_level: userEngagementLevel
                         });
                     });
                 }
+                
+                // Track video visibility
+                const videoObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const videoTitle = iframe.getAttribute('title') || 'Video ' + (index + 1);
+                            const videoId = iframe.getAttribute('data-ga-video-id');
+                            const videoType = iframe.getAttribute('data-ga-video-type');
+                            
+                            trackVideoInteraction('viewed', index, videoTitle, {
+                                video_id: videoId,
+                                video_type: videoType,
+                                visibility_percentage: Math.round(entry.intersectionRatio * 100)
+                            });
+                        }
+                    });
+                }, { threshold: [0.25, 0.5, 0.75, 1.0] });
+                
+                videoObserver.observe(iframe);
             });
         }
         
@@ -1534,8 +1648,9 @@
             });
         }
         
-        // Enhanced ecommerce tracking for conversion funnel
-        function trackConversionFunnel(step, value) {
+        // Enhanced ecommerce tracking for conversion funnel with detailed steps
+        function trackConversionFunnel(step, value, additionalData = {}) {
+            // Track funnel step with comprehensive data
             gtag('event', 'conversion_funnel', {
                 event_category: 'conversion',
                 event_label: step,
@@ -1544,7 +1659,51 @@
                 user_engagement_level: userEngagementLevel,
                 time_on_page: timeOnPage,
                 scroll_depth: scrollDepthPercentage,
-                video_interactions: videoInteractionCount
+                video_interactions: videoInteractionCount,
+                sections_visited: sectionVisitOrder.length,
+                max_scroll_depth: maxScrollDepth,
+                ...additionalData
+            });
+            
+            // Track user journey for funnel progression
+            trackUserJourney('funnel_step', {
+                step: step,
+                step_value: value,
+                funnel_progress: value,
+                engagement_level: userEngagementLevel,
+                time_to_step: timeOnPage
+            });
+            
+            // Track specific funnel milestones
+            if (value === 1) {
+                gtag('event', 'funnel_entry', {
+                    event_category: 'conversion',
+                    event_label: 'User entered funnel',
+                    time_on_page: timeOnPage,
+                    engagement_level: userEngagementLevel
+                });
+            } else if (value >= 4) {
+                gtag('event', 'funnel_high_engagement', {
+                    event_category: 'conversion',
+                    event_label: 'High engagement user',
+                    funnel_step: step,
+                    time_on_page: timeOnPage,
+                    video_interactions: videoInteractionCount
+                });
+            }
+        }
+        
+        // Track conversion funnel completion
+        function trackFunnelCompletion() {
+            gtag('event', 'funnel_completion', {
+                event_category: 'conversion',
+                event_label: 'User completed full funnel',
+                total_time_on_page: timeOnPage,
+                max_scroll_depth: maxScrollDepth,
+                video_interactions: videoInteractionCount,
+                sections_visited: sectionVisitOrder.length,
+                engagement_level: userEngagementLevel,
+                conversion_value: 1
             });
         }
         
@@ -1602,8 +1761,113 @@
             });
         });
         
-        // Track before page unload
+        // Enhanced real-time user behavior tracking
+        let userBehaviorData = {
+            mouseMovements: 0,
+            clicks: 0,
+            scrolls: 0,
+            keyPresses: 0,
+            focusEvents: 0,
+            hoverEvents: 0,
+            lastActivity: Date.now(),
+            activitySessions: []
+        };
+        
+        // Track mouse movements
+        document.addEventListener('mousemove', function() {
+            userBehaviorData.mouseMovements++;
+            userBehaviorData.lastActivity = Date.now();
+        });
+        
+        // Track clicks
+        document.addEventListener('click', function(e) {
+            userBehaviorData.clicks++;
+            userBehaviorData.lastActivity = Date.now();
+            
+            // Track click location and element
+            const element = e.target;
+            const elementType = element.tagName.toLowerCase();
+            const elementClass = element.className;
+            const elementId = element.id;
+            
+            gtag('event', 'element_click', {
+                event_category: 'user_behavior',
+                event_label: elementType + ' clicked',
+                element_type: elementType,
+                element_class: elementClass,
+                element_id: elementId,
+                click_x: e.clientX,
+                click_y: e.clientY,
+                time_on_page: timeOnPage
+            });
+        });
+        
+        // Track scrolls
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            userBehaviorData.scrolls++;
+            userBehaviorData.lastActivity = Date.now();
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                gtag('event', 'scroll_activity', {
+                    event_category: 'user_behavior',
+                    event_label: 'User scrolled',
+                    scroll_depth: scrollDepthPercentage,
+                    total_scrolls: userBehaviorData.scrolls,
+                    time_on_page: timeOnPage
+                });
+            }, 1000);
+        });
+        
+        // Track key presses
+        document.addEventListener('keydown', function(e) {
+            userBehaviorData.keyPresses++;
+            userBehaviorData.lastActivity = Date.now();
+        });
+        
+        // Track focus events
+        document.addEventListener('focusin', function() {
+            userBehaviorData.focusEvents++;
+            userBehaviorData.lastActivity = Date.now();
+        });
+        
+        // Track hover events
+        document.addEventListener('mouseover', function() {
+            userBehaviorData.hoverEvents++;
+            userBehaviorData.lastActivity = Date.now();
+        });
+        
+        // Track user activity sessions
+        setInterval(function() {
+            const now = Date.now();
+            const timeSinceLastActivity = now - userBehaviorData.lastActivity;
+            
+            if (timeSinceLastActivity > 30000) { // 30 seconds of inactivity
+                userBehaviorData.activitySessions.push({
+                    start: userBehaviorData.lastActivity,
+                    end: now,
+                    duration: timeSinceLastActivity,
+                    mouseMovements: userBehaviorData.mouseMovements,
+                    clicks: userBehaviorData.clicks,
+                    scrolls: userBehaviorData.scrolls
+                });
+                
+                // Reset counters
+                userBehaviorData.mouseMovements = 0;
+                userBehaviorData.clicks = 0;
+                userBehaviorData.scrolls = 0;
+                userBehaviorData.keyPresses = 0;
+                userBehaviorData.focusEvents = 0;
+                userBehaviorData.hoverEvents = 0;
+            }
+        }, 10000); // Check every 10 seconds
+        
+        // Track before page unload with comprehensive user behavior data
         window.addEventListener('beforeunload', function() {
+            // Calculate final engagement score
+            const engagementScore = calculateEngagementScore();
+            
             gtag('event', 'page_exit', {
                 event_category: 'engagement',
                 event_label: 'User leaving page',
@@ -1611,9 +1875,48 @@
                 max_scroll_depth: maxScrollDepth,
                 video_interactions: videoInteractionCount,
                 user_engagement_level: userEngagementLevel,
-                sections_viewed: reachedMilestones.length
+                sections_viewed: reachedMilestones.length,
+                engagement_score: engagementScore,
+                total_mouse_movements: userBehaviorData.mouseMovements,
+                total_clicks: userBehaviorData.clicks,
+                total_scrolls: userBehaviorData.scrolls,
+                total_key_presses: userBehaviorData.keyPresses,
+                total_focus_events: userBehaviorData.focusEvents,
+                total_hover_events: userBehaviorData.hoverEvents,
+                activity_sessions: userBehaviorData.activitySessions.length
+            });
+            
+            // Track user journey completion
+            trackUserJourney('page_exit', {
+                engagement_score: engagementScore,
+                total_interactions: userBehaviorData.clicks + userBehaviorData.scrolls + userBehaviorData.keyPresses,
+                time_on_page: timeOnPage,
+                sections_visited: sectionVisitOrder.length
             });
         });
+        
+        // Calculate engagement score based on user behavior
+        function calculateEngagementScore() {
+            let score = 0;
+            
+            // Time on page (max 30 points)
+            score += Math.min(timeOnPage / 10, 30);
+            
+            // Scroll depth (max 25 points)
+            score += (scrollDepthPercentage / 100) * 25;
+            
+            // Video interactions (max 20 points)
+            score += Math.min(videoInteractionCount * 5, 20);
+            
+            // Section visits (max 15 points)
+            score += Math.min(sectionVisitOrder.length * 3, 15);
+            
+            // User interactions (max 10 points)
+            const totalInteractions = userBehaviorData.clicks + userBehaviorData.scrolls + userBehaviorData.keyPresses;
+            score += Math.min(totalInteractions / 10, 10);
+            
+            return Math.round(score);
+        }
         
         // Enhanced video gallery tracking (integrate with existing functions)
         const originalShowVideo = window.showVideo;
@@ -1709,16 +2012,23 @@
         console.log('🎯 Google Analytics Enhanced Tracking Initialized');
         console.log('📊 Tracking Events:');
         console.log('  ✅ Page Views & Scroll Depth');
-        console.log('  ✅ Video Interactions (Play, Load, Navigation)');
-        console.log('  ✅ CTA Button Clicks (All Locations)');
-        console.log('  ✅ Section Visibility Tracking');
+        console.log('  ✅ Video Interactions (Play, Load, Navigation, Visibility)');
+        console.log('  ✅ CTA Button Clicks (All Locations with Journey Tracking)');
+        console.log('  ✅ Section Visibility Tracking (Visit Order & Time)');
         console.log('  ✅ Customer Reviews & Screenshots');
-        console.log('  ✅ Conversion Funnel Analysis');
+        console.log('  ✅ Conversion Funnel Analysis (Step-by-Step)');
         console.log('  ✅ Device Type & Performance');
         console.log('  ✅ Exit Intent & Engagement Levels');
         console.log('  ✅ Enhanced Ecommerce Tracking');
+        console.log('  ✅ Real-time User Behavior (Mouse, Clicks, Scrolls)');
+        console.log('  ✅ User Journey Tracking (Complete Path)');
+        console.log('  ✅ Engagement Score Calculation');
+        console.log('  ✅ Activity Session Tracking');
         console.log('🔗 GA4 Property: G-WYHB6JCL7D');
-        console.log('📈 Ready to track all user interactions!');
+        console.log('📈 Ready to track all user interactions with detailed analytics!');
+        console.log('🎯 User Behavior Tracking: Mouse movements, clicks, scrolls, key presses');
+        console.log('📊 Engagement Metrics: Time on page, scroll depth, video interactions, section visits');
+        console.log('🔄 Real-time Tracking: Activity sessions, engagement levels, user journey');
     </script>
 </body>
 </html>
