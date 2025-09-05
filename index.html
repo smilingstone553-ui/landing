@@ -1396,6 +1396,51 @@
                 
                 // Track external link clicks
                 if (href && (href.includes('dreambetx.cc') || href.includes('t.me'))) {
+                    // Debug: Log CTA click
+                    console.log('🎯 CTA CLICK DETECTED:', {
+                        buttonText: buttonText,
+                        buttonLocation: buttonLocation,
+                        destination: href,
+                        timestamp: new Date().toLocaleTimeString()
+                    });
+                    
+                    // Track DreamBetX button clicks with specific event name
+                    if (href.includes('dreambetx.cc')) {
+                        gtag('event', 'dbx_button_click', {
+                            event_category: 'conversion',
+                            event_label: buttonText,
+                            button_text: buttonText,
+                            button_location: buttonLocation,
+                            destination_url: href,
+                            user_engagement_level: userEngagementLevel,
+                            time_on_page: timeOnPage,
+                            scroll_depth: scrollDepthPercentage,
+                            video_interactions: videoInteractionCount,
+                            max_scroll_depth: maxScrollDepth,
+                            sections_viewed: reachedMilestones.length,
+                            conversion_type: 'dreambetx_signup'
+                        });
+                        
+                        // Also track as conversion event
+                        gtag('event', 'conversion', {
+                            send_to: 'G-WYHB6JCL7D',
+                            event_category: 'dreambetx_conversion',
+                            event_label: 'dbx_button_click_' + buttonLocation,
+                            value: 1,
+                            custom_parameter_1: userEngagementLevel,
+                            custom_parameter_2: videoInteractionCount,
+                            custom_parameter_3: scrollDepthPercentage
+                        });
+                        
+                        console.log('🎯 DreamBetX Button Click Tracked:', {
+                            event: 'dbx_button_click',
+                            button: buttonText,
+                            location: buttonLocation,
+                            destination: href
+                        });
+                    }
+                    
+                    // Call the main CTA tracking function for other links
                     trackCTAClick(buttonText, buttonLocation, href);
                     
                     // Enhanced tracking with data attributes
@@ -2181,6 +2226,79 @@
         
         // Create test panel after page load
         setTimeout(createTestPanel, 1000);
+        
+        // Add function to count CTA clicks
+        window.countCTAClicks = function() {
+            const ctaEvents = eventLog.filter(event => 
+                event.event === 'cta_click' || 
+                event.event === 'enhanced_cta_click' ||
+                event.event === 'conversion'
+            );
+            
+            // Count DreamBetX button clicks specifically
+            const dbxButtonClicks = eventLog.filter(event => 
+                event.event === 'dbx_button_click'
+            );
+            
+            console.log('🎯 CTA CLICK SUMMARY:');
+            console.log('📊 Total CTA Events:', ctaEvents.length);
+            console.log('🎯 DreamBetX Button Clicks (dbx_button_click):', dbxButtonClicks.length);
+            console.log('📋 DreamBetX Click Details:', dbxButtonClicks);
+            
+            // Count by destination
+            const dreambetxClicks = ctaEvents.filter(event => 
+                event.data && event.data.destination_url && 
+                event.data.destination_url.includes('dreambetx.cc')
+            );
+            
+            console.log('🎯 Total DreamBetX Clicks (all events):', dreambetxClicks.length + dbxButtonClicks.length);
+            console.log('📋 All DreamBetX Click Details:', [...dreambetxClicks, ...dbxButtonClicks]);
+            
+            return {
+                totalCTAClicks: ctaEvents.length,
+                dbxButtonClicks: dbxButtonClicks.length,
+                dreambetxClicks: dreambetxClicks.length,
+                totalDreamBetXClicks: dreambetxClicks.length + dbxButtonClicks.length,
+                events: ctaEvents,
+                dbxEvents: dbxButtonClicks
+            };
+        };
+        
+        // Add function to test CTA tracking
+        window.testCTATracking = function() {
+            console.log('🧪 Testing DreamBetX Button Tracking...');
+            
+            // Simulate a DreamBetX button click
+            gtag('event', 'dbx_button_click', {
+                event_category: 'conversion',
+                event_label: 'Test DreamBetX Button',
+                button_text: 'Test DreamBetX Button',
+                button_location: 'test_section',
+                destination_url: 'https://dreambetx.cc/',
+                user_engagement_level: 'high',
+                time_on_page: 30,
+                scroll_depth: 50,
+                video_interactions: 2,
+                max_scroll_depth: 75,
+                sections_viewed: 3,
+                conversion_type: 'dreambetx_signup'
+            });
+            
+            // Also test conversion event
+            gtag('event', 'conversion', {
+                send_to: 'G-WYHB6JCL7D',
+                event_category: 'dreambetx_conversion',
+                event_label: 'dbx_button_click_test_section',
+                value: 1,
+                custom_parameter_1: 'high',
+                custom_parameter_2: 2,
+                custom_parameter_3: 50
+            });
+            
+            console.log('✅ Test DreamBetX button events sent!');
+            console.log('🔍 Check Google Analytics for "dbx_button_click" event');
+            console.log('📊 Or run countCTAClicks() to see local events');
+        };
     </script>
 </body>
 </html>
