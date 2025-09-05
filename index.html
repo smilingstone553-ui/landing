@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💫 ڈریم چینجر – آپ کی قسمت بدلنے کا راز</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WYHB6JCL7D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WYHB6JCL7D', {
+            // Enhanced measurement settings
+            send_page_view: true,
+            custom_map: {
+                'custom_parameter_1': 'user_engagement_level',
+                'custom_parameter_2': 'video_interaction_count',
+                'custom_parameter_3': 'scroll_depth_percentage'
+            }
+        });
+        
+        // Enhanced Ecommerce tracking
+        gtag('config', 'G-WYHB6JCL7D', {
+            send_page_view: false // We'll send this manually with custom data
+        });
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -285,11 +308,13 @@
             <div class="mb-8">
                 <div class="relative w-full max-w-2xl mx-auto bg-gray-800 rounded-lg overflow-hidden">
                     <div class="aspect-video">
-                        <div class="video-container">
+                        <div class="video-container" data-ga-video="hero_video_1">
                             <iframe 
                                 src="https://player.vimeo.com/video/1115795936?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
                                 title="ٹوٹل ٹرک ویڈیو"
                                 style="width: 100%; height: 100%;"
+                                data-ga-video-id="1115795936"
+                                data-ga-video-type="hero"
                             ></iframe>
                         </div>
                     </div>
@@ -305,11 +330,13 @@
             <div class="mb-8">
                 <div class="relative w-full max-w-2xl mx-auto bg-gray-800 rounded-lg overflow-hidden">
                     <div class="aspect-video">
-                        <div class="video-container">
+                        <div class="video-container" data-ga-video="hero_video_2">
                             <iframe 
                                 src="https://player.vimeo.com/video/1115455822?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
                                 title="👇 ابھی کھیلنا شروع کرو – موقع ہاتھ سے نہ جانے دو 👇"
                                 style="width: 100%; height: 100%;"
+                                data-ga-video-id="1115455822"
+                                data-ga-video-type="hero"
                             ></iframe>
                         </div>
                     </div>
@@ -317,8 +344,8 @@
             </div>
             
             <!-- Primary CTA Button -->
-            <a href="https://dreambetx.cc/" class="block w-full max-w-md mx-auto">
-                <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow">
+            <a href="https://dreambetx.cc/" class="block w-full max-w-md mx-auto" data-ga-event="cta_click" data-ga-location="hero_section" data-ga-destination="dreambetx_main">
+                <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow" data-ga-button="primary_cta_hero">
                     👇 ابھی کھیلنا شروع کرو – موقع ہاتھ سے نہ جانے دو 👇
                 </button>
             </a>
@@ -334,9 +361,9 @@
             
             <!-- Video Navigation Numbers -->
             <div class="flex justify-center mb-6 space-x-4 rtl:space-x-reverse">
-                <button class="video-nav-btn active bg-gold text-black px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="0">1</button>
-                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="1">2</button>
-                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="2">3</button>
+                <button class="video-nav-btn active bg-gold text-black px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="0" data-ga-video-nav="video_1">1</button>
+                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="1" data-ga-video-nav="video_2">2</button>
+                <button class="video-nav-btn bg-gray-600 text-white px-4 py-2 rounded-full font-bold transition-all duration-300 text-lg" data-video="2" data-ga-video-nav="video_3">3</button>
             </div>
             
             <!-- Video Container -->
@@ -351,7 +378,7 @@
                                     <div class="text-center text-white">
                                         <div class="text-6xl mb-4">🎥</div>
                                         <p class="text-lg mb-2">Video 1 Loading...</p>
-                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(0)">
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(0)" data-ga-video-button="mobile_video_1">
                                             ▶️ Play Video 1
                                         </button>
                                     </div>
@@ -371,7 +398,7 @@
                                     <div class="text-center text-white">
                                         <div class="text-6xl mb-4">🎥</div>
                                         <p class="text-lg mb-2">Video 2 Loading...</p>
-                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(1)">
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(1)" data-ga-video-button="mobile_video_2">
                                             ▶️ Play Video 2
                                         </button>
                                     </div>
@@ -391,7 +418,7 @@
                                     <div class="text-center text-white">
                                         <div class="text-6xl mb-4">🎥</div>
                                         <p class="text-lg mb-2">Video 3 Loading...</p>
-                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(2)">
+                                        <button class="play-btn bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition-colors" onclick="loadVideo(2)" data-ga-video-button="mobile_video_3">
                                             ▶️ Play Video 3
                                         </button>
                                     </div>
@@ -407,13 +434,13 @@
                         </div>
                         
                         <!-- Mobile Navigation Arrows -->
-                        <button class="video-nav-arrow prev-arrow absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10">
+                        <button class="video-nav-arrow prev-arrow absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10" data-ga-video-nav="prev_arrow">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
                         
-                        <button class="video-nav-arrow next-arrow absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10">
+                        <button class="video-nav-arrow next-arrow absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all duration-300 z-10" data-ga-video-nav="next_arrow">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
@@ -441,11 +468,13 @@
                     <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
                         <div class="relative mb-4">
                             <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
-                                <div class="video-container">
+                                <div class="video-container" data-ga-video="live_proof_1">
                                     <iframe 
                                         src="https://player.vimeo.com/video/1115795936?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
                                         title="Live Proof Video 1"
                                         style="width: 100%; height: 100%;"
+                                        data-ga-video-id="1115795936"
+                                        data-ga-video-type="live_proof"
                                     ></iframe>
                                 </div>
                             </div>
@@ -461,11 +490,13 @@
                     <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
                         <div class="relative mb-4">
                             <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
-                                <div class="video-container">
+                                <div class="video-container" data-ga-video="live_proof_2">
                                     <iframe 
                                         src="https://player.vimeo.com/video/1115840668?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
                                         title="Live Proof Video 2"
                                         style="width: 100%; height: 100%;"
+                                        data-ga-video-id="1115840668"
+                                        data-ga-video-type="live_proof"
                                     ></iframe>
                                 </div>
                             </div>
@@ -481,11 +512,13 @@
                     <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-4 rounded-xl border-2 border-gold hover:border-urgent-red transition-all duration-300 transform hover:scale-105">
                         <div class="relative mb-4">
                             <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
-                                <div class="video-container">
+                                <div class="video-container" data-ga-video="live_proof_3">
                                     <iframe 
                                         src="https://player.vimeo.com/video/1115840710?title=0&byline=0&portrait=0&autoplay=0&controls=1" 
                                         title="Live Proof Video 3"
                                         style="width: 100%; height: 100%;"
+                                        data-ga-video-id="1115840710"
+                                        data-ga-video-type="live_proof"
                                     ></iframe>
                                 </div>
                             </div>
@@ -535,8 +568,8 @@
             
             <!-- Video CTA -->
             <div class="text-center">
-                <a href="https://dreambetx.cc/" class="inline-block">
-                    <button class="py-4 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200">
+                <a href="https://dreambetx.cc/" class="inline-block" data-ga-event="cta_click" data-ga-location="video_section" data-ga-destination="dreambetx_video">
+                    <button class="py-4 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200" data-ga-button="video_cta">
                         🎬 ابھی ویڈیوز دیکھیں اور جیتیں! 🎬
                     </button>
                 </a>
@@ -553,8 +586,8 @@
             <p class="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
                 ہمارے پاس ایک اسپیشل چینل ہے جہاں ہزاروں لوگ روزانہ اپنے جیت کے پروف شئیر کرتے ہیں۔ اگر شک ہے تو خود ثبوت دیکھ لو!
             </p>
-            <a href="https://t.me/dreamchangerprotrick" class="inline-block">
-                <button class="py-3 px-6 bg-gradient-to-r from-gold to-dark-gold text-black text-lg font-bold rounded-full hover:scale-105 transition-transform duration-200">
+            <a href="https://t.me/dreamchangerprotrick" class="inline-block" data-ga-event="cta_click" data-ga-location="trust_section" data-ga-destination="telegram_proof">
+                <button class="py-3 px-6 bg-gradient-to-r from-gold to-dark-gold text-black text-lg font-bold rounded-full hover:scale-105 transition-transform duration-200" data-ga-button="telegram_proof">
                     🔥 پروف دیکھنے کے لئے یہاں کلک کریں 🔥
                 </button>
             </a>
@@ -600,7 +633,7 @@
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Review 1 -->
-                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold" data-ga-review="ahmed_ali">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
                             👤
@@ -614,7 +647,7 @@
                 </div>
                 
                 <!-- Review 2 -->
-                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold" data-ga-review="fatima_khan">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
                             👤
@@ -628,7 +661,7 @@
                 </div>
                 
                 <!-- Review 3 -->
-                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gold" data-ga-review="umar_farooq">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xl mr-3">
                             👤
@@ -654,9 +687,9 @@
                 <div class="flex seamless-slide">
                     <!-- First Set of Screenshots -->
                     <!-- Screenshot 1 - Success Transaction -->
-                    <div class="flex-shrink-0 w-64 mx-2">
+                    <div class="flex-shrink-0 w-64 mx-2" data-ga-screenshot="transaction_success">
                         <div class="bg-white h-96 rounded-lg border-2 border-gold overflow-hidden shadow-lg">
-                            <img src="Success.jpeg" alt="40,800 PKR Transaction Success" class="w-full h-full object-cover" />
+                            <img src="Success.jpeg" alt="40,800 PKR Transaction Success" class="w-full h-full object-cover" data-ga-image="success_transaction" />
                         </div>
                     </div>
                     
@@ -804,8 +837,8 @@
             <h2 class="text-3xl md:text-4xl font-bold text-gold mb-6 animate-bounce-slow">
                 ⚡ قسمت بدلنے کا وقت آ گیا ہے – ابھی کھیلنا شروع کرو! ⚡
             </h2>
-            <a href="https://dreambetx.cc/" class="inline-block">
-                <button class="py-5 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-2xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow">
+            <a href="https://dreambetx.cc/" class="inline-block" data-ga-event="cta_click" data-ga-location="final_section" data-ga-destination="dreambetx_final">
+                <button class="py-5 px-8 bg-gradient-to-r from-urgent-red to-dark-red text-white text-2xl font-bold rounded-full glow-effect hover:scale-105 transition-transform duration-200 animate-glow" data-ga-button="final_cta">
                     👇 ابھی جوائن کرو اور کمائی شروع کرو 👇
                 </button>
             </a>
@@ -814,10 +847,10 @@
 
     <!-- Sticky Footer CTA -->
     <div class="sticky-cta">
-        <a href="https://dreambetx.cc/" class="block">
-                            <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-lg font-bold rounded-full glow-effect animate-glow">
-                    🔥 ابھی جوائن کرو 🔥
-                </button>
+        <a href="https://dreambetx.cc/" class="block" data-ga-event="cta_click" data-ga-location="sticky_footer" data-ga-destination="dreambetx_sticky">
+            <button class="w-full py-4 px-6 bg-gradient-to-r from-urgent-red to-dark-red text-white text-lg font-bold rounded-full glow-effect animate-glow" data-ga-button="sticky_cta">
+                🔥 ابھی جوائن کرو 🔥
+            </button>
         </a>
     </div>
 
@@ -1098,6 +1131,520 @@
                 }
             }
         }
+    </script>
+
+    <!-- Google Analytics Enhanced Tracking -->
+    <script>
+        // Global tracking variables
+        let userEngagementLevel = 'low';
+        let videoInteractionCount = 0;
+        let scrollDepthPercentage = 0;
+        let timeOnPage = 0;
+        let maxScrollDepth = 0;
+        let startTime = Date.now();
+        
+        // Track page load and initial engagement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Send initial page view with custom parameters
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                user_engagement_level: userEngagementLevel,
+                video_interaction_count: videoInteractionCount,
+                scroll_depth_percentage: scrollDepthPercentage,
+                custom_parameter_1: 'landing_page_loaded',
+                custom_parameter_2: 'urdu_content',
+                custom_parameter_3: 'dream_changer_campaign'
+            });
+            
+            // Track time on page
+            setInterval(function() {
+                timeOnPage = Math.round((Date.now() - startTime) / 1000);
+                
+                // Update engagement level based on time and interactions
+                if (timeOnPage > 30 || videoInteractionCount > 0 || scrollDepthPercentage > 50) {
+                    userEngagementLevel = 'medium';
+                }
+                if (timeOnPage > 120 || videoInteractionCount > 2 || scrollDepthPercentage > 80) {
+                    userEngagementLevel = 'high';
+                }
+            }, 10000); // Check every 10 seconds
+        });
+        
+        // Scroll depth tracking
+        let scrollMilestones = [25, 50, 75, 90, 100];
+        let reachedMilestones = [];
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+            scrollDepthPercentage = Math.round((scrollTop / documentHeight) * 100);
+            
+            // Track scroll milestones
+            scrollMilestones.forEach(milestone => {
+                if (scrollDepthPercentage >= milestone && !reachedMilestones.includes(milestone)) {
+                    reachedMilestones.push(milestone);
+                    gtag('event', 'scroll', {
+                        event_category: 'engagement',
+                        event_label: milestone + '%',
+                        value: milestone,
+                        scroll_depth: scrollDepthPercentage,
+                        time_on_page: timeOnPage
+                    });
+                }
+            });
+            
+            // Update max scroll depth
+            if (scrollDepthPercentage > maxScrollDepth) {
+                maxScrollDepth = scrollDepthPercentage;
+            }
+        });
+        
+        // Track section visibility
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const sectionObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionName = entry.target.querySelector('h2')?.textContent || 'Unknown Section';
+                    gtag('event', 'section_view', {
+                        event_category: 'engagement',
+                        event_label: sectionName,
+                        section_name: sectionName,
+                        time_on_page: timeOnPage
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+        
+        // Enhanced CTA button tracking
+        function trackCTAClick(buttonText, buttonLocation, destination) {
+            gtag('event', 'cta_click', {
+                event_category: 'conversion',
+                event_label: buttonText,
+                button_text: buttonText,
+                button_location: buttonLocation,
+                destination_url: destination,
+                user_engagement_level: userEngagementLevel,
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage,
+                video_interactions: videoInteractionCount
+            });
+            
+            // Track as conversion event
+            gtag('event', 'conversion', {
+                send_to: 'G-WYHB6JCL7D',
+                event_category: 'engagement',
+                event_label: 'cta_click_' + buttonLocation,
+                value: 1
+            });
+        }
+        
+        // Track all CTA buttons with enhanced data attributes
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a, button');
+            if (target) {
+                const href = target.getAttribute('href');
+                const buttonText = target.textContent.trim();
+                const buttonLocation = target.closest('section')?.querySelector('h2')?.textContent || 'Unknown';
+                
+                // Enhanced tracking with data attributes
+                const gaEvent = target.getAttribute('data-ga-event');
+                const gaLocation = target.getAttribute('data-ga-location');
+                const gaDestination = target.getAttribute('data-ga-destination');
+                const gaButton = target.getAttribute('data-ga-button');
+                const gaVideoButton = target.getAttribute('data-ga-video-button');
+                const gaVideoNav = target.getAttribute('data-ga-video-nav');
+                
+                // Track external link clicks
+                if (href && (href.includes('dreambetx.cc') || href.includes('t.me'))) {
+                    trackCTAClick(buttonText, buttonLocation, href);
+                    
+                    // Enhanced tracking with data attributes
+                    if (gaEvent && gaLocation && gaDestination) {
+                        gtag('event', 'enhanced_cta_click', {
+                            event_category: 'conversion',
+                            event_label: gaButton || buttonText,
+                            button_type: gaButton,
+                            button_location: gaLocation,
+                            destination: gaDestination,
+                            user_engagement_level: userEngagementLevel,
+                            time_on_page: timeOnPage,
+                            scroll_depth: scrollDepthPercentage,
+                            video_interactions: videoInteractionCount
+                        });
+                    }
+                }
+                
+                // Track video play button clicks
+                if (target.classList.contains('play-btn') || buttonText.includes('Play') || gaVideoButton) {
+                    const videoIndex = target.getAttribute('onclick')?.match(/\d+/)?.[0] || 'unknown';
+                    gtag('event', 'video_play_click', {
+                        event_category: 'video_interaction',
+                        event_label: gaVideoButton || 'Video ' + (parseInt(videoIndex) + 1),
+                        video_button: gaVideoButton,
+                        video_index: videoIndex,
+                        button_location: buttonLocation,
+                        time_on_page: timeOnPage
+                    });
+                }
+                
+                // Track video navigation clicks
+                if (gaVideoNav) {
+                    gtag('event', 'video_navigation_click', {
+                        event_category: 'video_interaction',
+                        event_label: gaVideoNav,
+                        navigation_type: gaVideoNav,
+                        time_on_page: timeOnPage,
+                        current_video: currentVideo
+                    });
+                }
+            }
+        });
+        
+        // Video interaction tracking
+        function trackVideoInteraction(action, videoIndex, videoTitle) {
+            videoInteractionCount++;
+            userEngagementLevel = videoInteractionCount > 0 ? 'medium' : userEngagementLevel;
+            
+            gtag('event', 'video_interaction', {
+                event_category: 'video_engagement',
+                event_label: action + '_' + videoTitle,
+                video_action: action,
+                video_index: videoIndex,
+                video_title: videoTitle,
+                total_video_interactions: videoInteractionCount,
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage
+            });
+        }
+        
+        // Enhanced video tracking for Vimeo iframes
+        function setupVideoTracking() {
+            const iframes = document.querySelectorAll('iframe[src*="vimeo"]');
+            iframes.forEach((iframe, index) => {
+                // Track when video is loaded
+                iframe.addEventListener('load', function() {
+                    const videoTitle = iframe.getAttribute('title') || 'Video ' + (index + 1);
+                    const videoId = iframe.getAttribute('data-ga-video-id');
+                    const videoType = iframe.getAttribute('data-ga-video-type');
+                    
+                    trackVideoInteraction('loaded', index, videoTitle);
+                    
+                    // Enhanced video tracking
+                    gtag('event', 'video_loaded', {
+                        event_category: 'video_engagement',
+                        event_label: videoTitle,
+                        video_id: videoId,
+                        video_type: videoType,
+                        video_index: index,
+                        time_on_page: timeOnPage
+                    });
+                });
+                
+                // Track video container clicks (play attempts)
+                const container = iframe.closest('.video-container');
+                if (container) {
+                    container.addEventListener('click', function() {
+                        const videoTitle = iframe.getAttribute('title') || 'Video ' + (index + 1);
+                        const videoId = iframe.getAttribute('data-ga-video-id');
+                        const videoType = iframe.getAttribute('data-ga-video-type');
+                        
+                        trackVideoInteraction('play_attempt', index, videoTitle);
+                        
+                        // Enhanced video click tracking
+                        gtag('event', 'video_container_click', {
+                            event_category: 'video_engagement',
+                            event_label: videoTitle,
+                            video_id: videoId,
+                            video_type: videoType,
+                            video_index: index,
+                            time_on_page: timeOnPage
+                        });
+                    });
+                }
+            });
+        }
+        
+        // Track review interactions
+        function setupReviewTracking() {
+            const reviews = document.querySelectorAll('[data-ga-review]');
+            reviews.forEach(review => {
+                const reviewId = review.getAttribute('data-ga-review');
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            gtag('event', 'review_view', {
+                                event_category: 'social_proof',
+                                event_label: reviewId,
+                                review_id: reviewId,
+                                time_on_page: timeOnPage,
+                                scroll_depth: scrollDepthPercentage
+                            });
+                        }
+                    });
+                }, { threshold: 0.5 });
+                observer.observe(review);
+            });
+        }
+        
+        // Track screenshot interactions
+        function setupScreenshotTracking() {
+            const screenshots = document.querySelectorAll('[data-ga-screenshot]');
+            screenshots.forEach(screenshot => {
+                const screenshotId = screenshot.getAttribute('data-ga-screenshot');
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            gtag('event', 'screenshot_view', {
+                                event_category: 'social_proof',
+                                event_label: screenshotId,
+                                screenshot_id: screenshotId,
+                                time_on_page: timeOnPage,
+                                scroll_depth: scrollDepthPercentage
+                            });
+                        }
+                    });
+                }, { threshold: 0.5 });
+                observer.observe(screenshot);
+            });
+        }
+        
+        // Track video navigation
+        function trackVideoNavigation(fromVideo, toVideo) {
+            gtag('event', 'video_navigation', {
+                event_category: 'video_engagement',
+                event_label: 'Video ' + (fromVideo + 1) + ' to Video ' + (toVideo + 1),
+                from_video: fromVideo,
+                to_video: toVideo,
+                total_navigations: videoInteractionCount,
+                time_on_page: timeOnPage
+            });
+        }
+        
+        // Track screenshot slider interactions
+        function trackScreenshotView() {
+            gtag('event', 'screenshot_view', {
+                event_category: 'social_proof',
+                event_label: 'Transaction Screenshots',
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage
+            });
+        }
+        
+        // Track trust section interactions
+        function trackTrustSection() {
+            gtag('event', 'trust_section_view', {
+                event_category: 'social_proof',
+                event_label: 'Trust Proof Section',
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage
+            });
+        }
+        
+        // Track customer reviews
+        function trackReviewView() {
+            gtag('event', 'reviews_view', {
+                event_category: 'social_proof',
+                event_label: 'Customer Reviews',
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage
+            });
+        }
+        
+        // Enhanced ecommerce tracking for conversion funnel
+        function trackConversionFunnel(step, value) {
+            gtag('event', 'conversion_funnel', {
+                event_category: 'conversion',
+                event_label: step,
+                funnel_step: step,
+                funnel_value: value,
+                user_engagement_level: userEngagementLevel,
+                time_on_page: timeOnPage,
+                scroll_depth: scrollDepthPercentage,
+                video_interactions: videoInteractionCount
+            });
+        }
+        
+        // Track page exit intent
+        let exitIntentTracked = false;
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY <= 0 && !exitIntentTracked) {
+                exitIntentTracked = true;
+                gtag('event', 'exit_intent', {
+                    event_category: 'engagement',
+                    event_label: 'User leaving page',
+                    time_on_page: timeOnPage,
+                    scroll_depth: scrollDepthPercentage,
+                    video_interactions: videoInteractionCount,
+                    user_engagement_level: userEngagementLevel
+                });
+            }
+        });
+        
+        // Track mobile vs desktop usage
+        function trackDeviceType() {
+            const isMobile = window.innerWidth <= 768;
+            gtag('event', 'device_type', {
+                event_category: 'technical',
+                event_label: isMobile ? 'Mobile' : 'Desktop',
+                device_type: isMobile ? 'mobile' : 'desktop',
+                screen_width: window.innerWidth,
+                screen_height: window.innerHeight
+            });
+        }
+        
+        // Track page performance
+        window.addEventListener('load', function() {
+            const loadTime = Date.now() - startTime;
+            gtag('event', 'page_performance', {
+                event_category: 'technical',
+                event_label: 'Page Load Time',
+                load_time: loadTime,
+                device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop'
+            });
+            
+            // Setup all tracking after page load
+            setupVideoTracking();
+            setupReviewTracking();
+            setupScreenshotTracking();
+            trackDeviceType();
+            
+            // Track page fully loaded
+            gtag('event', 'page_fully_loaded', {
+                event_category: 'technical',
+                event_label: 'All resources loaded',
+                load_time: loadTime,
+                device_type: window.innerWidth <= 768 ? 'mobile' : 'desktop',
+                user_engagement_level: userEngagementLevel
+            });
+        });
+        
+        // Track before page unload
+        window.addEventListener('beforeunload', function() {
+            gtag('event', 'page_exit', {
+                event_category: 'engagement',
+                event_label: 'User leaving page',
+                time_on_page: timeOnPage,
+                max_scroll_depth: maxScrollDepth,
+                video_interactions: videoInteractionCount,
+                user_engagement_level: userEngagementLevel,
+                sections_viewed: reachedMilestones.length
+            });
+        });
+        
+        // Enhanced video gallery tracking (integrate with existing functions)
+        const originalShowVideo = window.showVideo;
+        window.showVideo = function(videoIndex) {
+            if (typeof currentVideo !== 'undefined') {
+                trackVideoNavigation(currentVideo, videoIndex);
+            }
+            if (originalShowVideo) {
+                originalShowVideo(videoIndex);
+            }
+        };
+        
+        const originalLoadVideo = window.loadVideo;
+        window.loadVideo = function(videoIndex) {
+            const videoTitle = 'Live Proof Video ' + (videoIndex + 1);
+            trackVideoInteraction('load_attempt', videoIndex, videoTitle);
+            if (originalLoadVideo) {
+                originalLoadVideo(videoIndex);
+            }
+        };
+        
+        // Track specific section interactions
+        const trustSection = document.querySelector('section:has(h2:contains("ابھی بھی شک ہے"))');
+        const reviewsSection = document.querySelector('section:has(h2:contains("کسٹمر رائے"))');
+        const screenshotsSection = document.querySelector('section:has(h2:contains("اصل کمائی کے موبائل اسکرین شاٹس"))');
+        
+        if (trustSection) {
+            const trustObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        trackTrustSection();
+                    }
+                });
+            }, { threshold: 0.5 });
+            trustObserver.observe(trustSection);
+        }
+        
+        if (reviewsSection) {
+            const reviewsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        trackReviewView();
+                    }
+                });
+            }, { threshold: 0.5 });
+            reviewsObserver.observe(reviewsSection);
+        }
+        
+        if (screenshotsSection) {
+            const screenshotsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        trackScreenshotView();
+                    }
+                });
+            }, { threshold: 0.5 });
+            screenshotsObserver.observe(screenshotsSection);
+        }
+        
+        // Track conversion funnel steps
+        function trackFunnelStep(step) {
+            const funnelSteps = {
+                'hero_video_view': 1,
+                'live_proof_view': 2,
+                'trust_section_view': 3,
+                'reviews_view': 4,
+                'screenshots_view': 5,
+                'final_cta_click': 6
+            };
+            
+            if (funnelSteps[step]) {
+                trackConversionFunnel(step, funnelSteps[step]);
+            }
+        }
+        
+        // Initialize funnel tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track hero video view
+            const heroVideo = document.querySelector('iframe[src*="1115795936"]');
+            if (heroVideo) {
+                const heroObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            trackFunnelStep('hero_video_view');
+                        }
+                    });
+                }, { threshold: 0.5 });
+                heroObserver.observe(heroVideo);
+            }
+        });
+        
+        // Initialize comprehensive tracking summary
+        console.log('🎯 Google Analytics Enhanced Tracking Initialized');
+        console.log('📊 Tracking Events:');
+        console.log('  ✅ Page Views & Scroll Depth');
+        console.log('  ✅ Video Interactions (Play, Load, Navigation)');
+        console.log('  ✅ CTA Button Clicks (All Locations)');
+        console.log('  ✅ Section Visibility Tracking');
+        console.log('  ✅ Customer Reviews & Screenshots');
+        console.log('  ✅ Conversion Funnel Analysis');
+        console.log('  ✅ Device Type & Performance');
+        console.log('  ✅ Exit Intent & Engagement Levels');
+        console.log('  ✅ Enhanced Ecommerce Tracking');
+        console.log('🔗 GA4 Property: G-WYHB6JCL7D');
+        console.log('📈 Ready to track all user interactions!');
     </script>
 </body>
 </html>
